@@ -52,9 +52,9 @@ var yAxis = d3.svg.axis().scale(y)
     .orient("left").ticks(5);
 
 // Define the line
-var priceline = d3.svg.line()	
+var degreeLine = d3.svg.line()	
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.price); });
+    .y(function(d) { return y(d.degree); });
     
 // Adds the svg canvas
 var svg = d3.select("body")
@@ -74,7 +74,7 @@ d3.csv("data.csv", function(error, data) {
 
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.price; })]);
+    y.domain([0, d3.max(data, function(d) { return d.degree; })]);
 
     // Nest the entries by symbol
     var dataNest = d3.nest()
@@ -92,7 +92,7 @@ d3.csv("data.csv", function(error, data) {
             .attr("class", "line")
             .style("stroke", function() { // Add the colours dynamically
                 return d.color = color(d.key); })
-            .attr("d", priceline(d.values));
+            .attr("d", degreeLine(d.values));
 
         // Add the Legend
         svg.append("text")
