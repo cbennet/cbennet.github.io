@@ -1,4 +1,4 @@
-symbol,date,price
+type,date,degree
 Learning,Jan 2000,1
 Learning,Feb 2000,2
 Learning,Mar 2000,2

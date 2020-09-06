@@ -42,7 +42,7 @@ var parseDate = d3.time.format("%b %Y").parse;
 
 // Set the ranges
 var x = d3.time.scale().range([0, width]);
-var y = d3.scale.linear().range([height, 0]);
+var y = d3.scale.linear().range([6, -6]);
 
 // Define the axes
 var xAxis = d3.svg.axis().scale(x)
@@ -69,7 +69,7 @@ var svg = d3.select("body")
 d3.csv("data.csv", function(error, data) {
     data.forEach(function(d) {
 		d.date = parseDate(d.date);
-		d.price = +d.price;
+		d.degree = +d.degree;
     });
 
     // Scale the range of the data
@@ -78,7 +78,7 @@ d3.csv("data.csv", function(error, data) {
 
     // Nest the entries by symbol
     var dataNest = d3.nest()
-        .key(function(d) {return d.symbol;})
+        .key(function(d) {return d.type;})
         .entries(data);
 
     var color = d3.scale.category10();   // set the colour scale
