@@ -45,9 +45,9 @@ var x = d3.time.scale().range([0, width]);
 var y = d3.scale.linear().domain([-6, 6]).range([0, 5]);
 
 // Define the axes
-// var xAxis = d3.svg.axis().scale(x)
-//     .orient("bottom").ticks(5);
-var xAxis = d3.axisBottom(x);
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(5);
+// var xAxis = d3.axisBottom(x);
 
 // var yAxis = d3.svg.axis().scale(y)
 //     .orient("left").ticks(5);
