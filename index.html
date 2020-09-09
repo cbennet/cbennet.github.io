@@ -50,25 +50,17 @@ line = d3.line()
     .x(d => x(d.date))
     .y(d => y(d.degree))
 
-x = ƒ(n)
-
 x = d3.scaleUtc()
     .domain(d3.extent(data, d => d.date))
     .range([margin.left, width - margin.right])
-
-y = ƒ(n)
 
 y = d3.scaleLinear()
     .domain([-6, 6]).nice()
     .range([height - margin.bottom, margin.top])
 
-xAxis = ƒ(g)
-
 xAxis = g => g
     .attr("transform", `translate(0,${height - margin.bottom})`)
     .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))
-
-yAxis = ƒ(g)
 
 yAxis = g => g
     .attr("transform", `translate(${margin.left},0)`)
