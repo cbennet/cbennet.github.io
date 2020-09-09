@@ -32,6 +32,11 @@ path {
 
 <script>
 
+
+var margin = {top: 30, right: 20, bottom: 70, left: 50},
+    width = 600 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
 const svg = d3.create("svg")
     .attr("viewBox", [0, 0, width, height]);
 
@@ -94,10 +99,6 @@ yAxis = g => g
         .attr("text-anchor", "start")
         .attr("font-weight", "bold")
         .text(data.y))
-
-margin = ({top: 20, right: 30, bottom: 30, left: 40})
-
-height = 500;
 
 </script>
 </body>
