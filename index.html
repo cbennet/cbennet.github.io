@@ -45,6 +45,8 @@ data = d3.csv("/data1.csv").then(function(data) {
     });
 });
 
+console.log(data)
+console.log(d3.extent(data, d => d.date))
 line = d3.line()
     .defined(d => !isNaN(d.degree))
     .x(d => x(d.date))
