@@ -51,7 +51,7 @@ line = d3.line()
     .y(d => y(d.degree))
 
 x = d3.scaleUtc()
-    .domain(d3.extent(data, d => d.date))
+    .domain(d3.extent(d, d => d.date))
     .range([margin.left, width - margin.right])
 
 y = d3.scaleLinear()
