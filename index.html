@@ -1,3 +1,36 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.legend {
+    font-size: 16px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+</style>
+<body>
+
+<!-- load the d3.js library -->    
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<script>
 chart = {
     const svg = d3.create("svg")
         .attr("viewBox", [0, 0, width, height]);
@@ -69,3 +102,5 @@ margin = ({top: 20, right: 30, bottom: 30, left: 40})
 
 height = 500;
 
+</script>
+</body>
