@@ -43,6 +43,7 @@ data = d3.csv("/data1.csv").then(function(data) {
 		d.date = +d.date;
         d.degree = +d.degree;
     });
+    return data;
 });
 
 console.log(data)
