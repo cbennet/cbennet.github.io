@@ -47,7 +47,7 @@ var margin = {top: 30, right: 20, bottom: 70, left: 50},
 //     });
 // });
 
-data1 = Object.assign((d3.csvParse(await FileAttachment("data1.csv").text(), d3.autoType)).map(({type, date, degree}) => ({type, date, degree})), {y: "Degree"})
+data1 = Object.assign((d3.csvParse(await FileAttachment("data1.csv").text(), d3.autoType)), {y: "Degree"})
 
 console.log(data1)
 console.log(d3.extent(data1, d => d.date))
