@@ -40,12 +40,10 @@ var margin = {top: 30, right: 20, bottom: 70, left: 50},
 d3.csv("/data1.csv").then(function(data) {
     data.forEach(function(d) {
         d.type = +d.type;
-		d.date = parseDate(d.date);
+		d.date = d.date;
         d.degree = +d.degree;
     });
 });
-
-line = f(a);
 
 line = d3.line()
     .defined(d => !isNaN(d.degree))
