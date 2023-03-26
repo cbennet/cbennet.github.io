@@ -9,6 +9,7 @@ body { font: 12px Arial;}
     <title>This is the title of the webpage!</title>
 </head>
 <body>
+    <svg width="600" height="500"></svg>
 
 <!-- load the d3.js library -->    
 <script src="https://d3js.org/d3.v6.min.js"></script>
@@ -53,7 +54,7 @@ body { font: 12px Arial;}
             .attr("dy", "-5.1em")
             .attr("text-anchor", "end")
             .attr("stroke", "black")
-            .text("Stock Price");
+            .text("crimes per population");
 
         g.selectAll(".bar")
             .data(data)
