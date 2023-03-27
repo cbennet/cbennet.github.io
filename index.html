@@ -1,21 +1,89 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style> /* set the CSS */
-
-body { font: 12px Arial;}
-
+.center {
+  margin: auto;
+  width: 60%;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
 </style>
 <head>     
     <title>This is the title of the webpage!</title>
 </head>
 <body>
-    <svg width="600" height="800"></svg>
+<div class="center">
+    <select id="stateSelectButton"></select>
+    <select id="crimeSelectButton"></select>
+    <select id="typeSelectButton"></select>
+    <button onclick="makePlot()"> Show Plot </button>
+</div>
+
+    <svg width="900" height="1200"></svg>
 
 <!-- load the d3.js library -->    
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
 <script>
-         
+    var allStates = ['National_Total', 'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE',
+                    'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO',
+                    'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY' ,'OH', 'OK', 'OR', 'PA',
+                    'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY']
+    
+    var allCrimes = ["violent_crime",	"homicide",	"rape_legacy",	"rape_revised",	"robbery",	"aggravated_assault",	"property_crime",	"burglary",	"larceny",	"motor_vehicle_theft"]
+
+    var allTypes = ["Overall", "vs Population", "vs Total Crimes"]
+
+    d3.select("#stateSelectButton")
+      .selectAll('myOptions')
+     	.data(allStates)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; })
+      .attr("value", function (d) { return d; })
+      
+      d3.select("#crimeSelectButton")
+      .selectAll('myOptions')
+     	.data(allCrimes)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; })
+      .attr("value", function (d) { return d; })
+
+      d3.select("#typeSelectButton")
+      .selectAll('myOptions')
+     	.data(allTypes)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; })
+      .attr("value", function (d) { return d; })
+      
+
+function makePlot(){
+    d3.selectAll("g > *").remove()
+    var curState = document.getElementById("stateSelectButton").value
+    var curCrime = document.getElementById("crimeSelectButton").value
+    var curType = document.getElementById("typeSelectButton").value
+
+    console.log(curState)
+    console.log(curCrime)
+    console.log(curType)
+
+    var plotType
+    
+    if(curType == allTypes[0])
+    {
+        plotType = ""
+    }
+    else if(curType == allTypes[1])
+    {
+        plotType = "_popPercent"
+    }
+    else if(curType == allTypes[2])
+    {
+        plotType = "_crimePercent"
+    }
+
     var svg = d3.select("svg"),
         margin = 200,
         width = svg.attr("width") - margin,
@@ -30,12 +98,13 @@ body { font: 12px Arial;}
 
     d3.csv("crimes_updated.csv").then(function (csvData){
         data = csvData.filter(function(row){
-            return row.state_abbr === "AK"
+            return row.state_abbr === curState
         });
         xScale.domain(data.map(function(d) { return d.year; }));
-        yScale.domain([0, d3.max(data, function(d) { return d.property_crime_popPercent; })]);
+        yScale.domain([0, 1.2*d3.max(data, function(d) { return d[curCrime + plotType]; })]);
+        
 
-        g.append("g")
+    g.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(xScale)
             )
@@ -51,7 +120,7 @@ body { font: 12px Arial;}
             .call(d3.axisBottom(xScale).tickValues([])
             )
             .append("text")
-            .attr("y", height - 250)
+            .attr("y", height - 650)
             .attr("x", width - 100)
             .attr("text-anchor", "end")
             .attr("stroke", "black")
@@ -66,7 +135,7 @@ body { font: 12px Arial;}
             .attr("dy", "-5.1em")
             .attr("text-anchor", "end")
             .attr("stroke", "black")
-            .text("crimes per population");
+            .text("Crimes "+ plotType);
 
         g.append("text")
             .attr("x", (width / 2))             
@@ -74,24 +143,20 @@ body { font: 12px Arial;}
             .attr("text-anchor", "middle")  
             .style("font-size", "16px") 
             .style("text-decoration", "underline")  
-            .text("Crimes per pop over time");
+            .text(curCrime +" "+ curType+ " commited in " + curState);
 
         g.selectAll(".bar")
             .data(data)
             .enter().append("rect")
             .attr("class", "bar")
             .attr("x", function(d) { return xScale(d.year); })
-            .attr("y", function(d) { return yScale(d.property_crime_popPercent); })
+            .attr("y", function(d) { return yScale(d[curCrime + plotType]); })
             .attr("width", xScale.bandwidth())
-            .attr("height", function(d) { return height - yScale(d.property_crime_popPercent); });
-    }
+            .attr("height", function(d) { return height - yScale(d[curCrime + plotType]); });
+        }
     )
+}
 
 </script>
-
-
-<p>
-    This is an example paragraph. Anything in the tag will appear on the page, just like this tag and its contents.
-</p>
 
 </body>
